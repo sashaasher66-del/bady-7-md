@@ -1,0 +1,22 @@
+<!DOCTYPE html><html><head><title>BADY 7 MD - Pair</title><script src="https://cdn.tailwindcss.com"></script></head>
+<body class="bg-black text-white flex justify-center items-center min-h-screen">
+<div class="border border-green-500 p-8 rounded-2xl w-[90%] max-w-md text-center shadow-[0_0_30px_#22c55e]">
+<h1 class="text-3xl font-bold text-green-400">BADY 7 MD</h1>
+<p class="text-sm mt-2 text-gray-400">Enter Your WhatsApp Number</p>
+<input id="num" placeholder="2557XXXXXXXX" class="mt-6 w-full p-3 bg-zinc-900 rounded-lg border border-zinc-700 text-center outline-none">
+<button onclick="pair()" id="btn" class="mt-4 w-full bg-green-500 text-black font-bold p-3 rounded-lg">GET PAIR CODE</button>
+<div id="result" class="mt-6 text-3xl font-mono tracking-widest text-green-400"></div>
+<p id="help" class="text-xs mt-3 text-gray-500"></p>
+</div>
+<script>
+async function pair(){
+ let n=document.getElementById('num').value;
+ let btn=document.getElementById('btn');
+ if(!n){ alert("Weka namba!"); return; }
+ btn.innerText="Generating..."; document.getElementById('result').innerText="";
+ let r=await fetch('/code',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({number:n})});
+ let d=await r.json();
+ if(d.code){ document.getElementById('result').innerText=d.code; document.getElementById('help').innerText="Nenda WhatsApp > Linked Devices > Link with Phone Number > Weka hii code"; btn.innerText="CODE GENERATED";
+ }else{ document.getElementById('result').innerText=d.error; btn.innerText="TRY AGAIN"; }
+}
+</script></body></html>
